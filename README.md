@@ -1,73 +1,138 @@
-# React + TypeScript + Vite
+# Chrome Extension Vite Template
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A modern Chrome extension boilerplate built with Vite, React, TypeScript, Tailwind CSS, and shadcn/ui.
 
-Currently, two official plugins are available:
+## Project Structure
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```
+├── public/
+│   └── manifest.json          # Chrome extension manifest (v3)
+├── src/
+│   ├── popup/                 # Extension popup UI
+│   │   ├── Popup.tsx
+│   │   └── index.tsx
+│   ├── options/               # Extension options page
+│   │   ├── Options.tsx
+│   │   └── index.tsx
+│   ├── background/            # Background service worker
+│   │   └── index.ts
+│   ├── content/               # Content script
+│   │   └── index.ts
+│   └── index.css             # Global styles with Tailwind
+├── popup.html                # Popup HTML entry point
+├── options.html              # Options page HTML entry point
+└── vite.config.ts            # Vite configuration for multi-page build
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Features
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- **Manifest V3**: Latest Chrome extension manifest version
+- **React 18**: Modern React with TypeScript
+- **Tailwind CSS**: Utility-first CSS framework
+- **shadcn/ui**: Beautiful, accessible component library
+- **Vite**: Fast build tool and dev server
+- **TypeScript**: Full type safety
+- **Hot Module Replacement**: Fast development experience
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+## Getting Started
+
+### Development
+
+```bash
+npm install
+npm run dev
 ```
+
+### Build
+
+```bash
+npm run build
+```
+
+The extension will be built to the `dist/` folder.
+
+### Load Extension in Chrome
+
+1. Run `npm run build` to create the production build
+2. Open Chrome and go to `chrome://extensions/`
+3. Enable "Developer mode" in the top right
+4. Click "Load unpacked"
+5. Select the `dist/` folder
+
+## Extension Components
+
+### Popup (`src/popup/`)
+
+The UI that appears when users click the extension icon in the toolbar.
+
+### Options Page (`src/options/`)
+
+A full-page interface for extension settings. Access via right-click on extension icon → Options.
+
+### Background Service Worker (`src/background/`)
+
+Runs in the background and handles events like:
+- Extension installation
+- Messages from content scripts
+- Tab updates
+- Browser events
+
+### Content Script (`src/content/`)
+
+Runs in the context of web pages and can:
+- Access and modify the DOM
+- Communicate with the background script
+- Inject UI elements into pages
+
+## Chrome Storage API
+
+The extension uses `chrome.storage.sync` for settings persistence. Example usage can be found in `src/options/Options.tsx`.
+
+## Communication Between Components
+
+- **Popup ↔ Background**: Use `chrome.runtime.sendMessage()`
+- **Content ↔ Background**: Use `chrome.runtime.sendMessage()`
+- **Background → Content**: Use `chrome.tabs.sendMessage()`
+
+## Customization
+
+### Adding Icons
+
+Add icon files to the `public/` folder:
+- `icon-16.png` (16x16px)
+- `icon-48.png` (48x48px)
+- `icon-128.png` (128x128px)
+
+### Permissions
+
+Edit `public/manifest.json` to add required permissions:
+
+```json
+{
+  "permissions": [
+    "storage",
+    "activeTab",
+    "tabs"
+  ],
+  "host_permissions": [
+    "https://*.example.com/*"
+  ]
+}
+```
+
+### shadcn/ui Components
+
+Add shadcn/ui components:
+
+```bash
+npx shadcn@latest add button
+npx shadcn@latest add card
+```
+
+## Resources
+
+- [Chrome Extension Docs](https://developer.chrome.com/docs/extensions/)
+- [Manifest V3 Migration Guide](https://developer.chrome.com/docs/extensions/migrating/to-service-workers/)
+- [Vite Documentation](https://vitejs.dev/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [shadcn/ui](https://ui.shadcn.com/)
