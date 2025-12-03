@@ -32,7 +32,7 @@ A modern Naver Whale extension boilerplate built with Vite, React, TypeScript, T
 
 - **Manifest V3**: Latest extension manifest version
 - **Whale Sidebar**: Built-in sidebar support (Whale-specific feature)
-- **Chrome Compatible**: Works with both Whale and Chrome browsers
+- **Chrome API Compatible**: Chrome extension APIs work in Whale browser
 - **React 18**: Modern React with TypeScript
 - **Tailwind CSS**: Utility-first CSS framework
 - **shadcn/ui**: Beautiful, accessible component library
@@ -63,14 +63,6 @@ The extension will be built to the `dist/` folder.
 2. Open Whale browser and go to `whale://extensions/`
 3. Enable "Developer mode" in the top right
 4. Click "Load unpacked extension"
-5. Select the `dist/` folder
-
-### Load Extension in Chrome (also compatible)
-
-1. Run `npm run build`
-2. Open Chrome and go to `chrome://extensions/`
-3. Enable "Developer mode"
-4. Click "Load unpacked"
 5. Select the `dist/` folder
 
 ## Extension Components
@@ -108,9 +100,11 @@ Runs in the context of web pages and can:
 - Communicate with the background script
 - Inject UI elements into pages
 
-## Whale/Chrome Storage API
+## Storage API
 
-The extension uses `whale.storage.sync` (or `chrome.storage.sync`) for settings persistence. Example usage can be found in `src/options/Options.tsx`.
+The extension uses `whale.storage.sync` for settings persistence. Example usage can be found in `src/options/Options.tsx`.
+
+Note: Whale browser supports both `whale.*` and `chrome.*` APIs, so you can use `chrome.storage.sync` as well.
 
 ## Communication Between Components
 
@@ -118,8 +112,6 @@ The extension uses `whale.storage.sync` (or `chrome.storage.sync`) for settings 
 - **Sidebar ↔ Background**: Use `whale.runtime.sendMessage()`
 - **Content ↔ Background**: Use `whale.runtime.sendMessage()`
 - **Background → Content**: Use `whale.tabs.sendMessage()`
-
-Note: `whale.*` APIs are compatible with `chrome.*` APIs.
 
 ## Customization
 
@@ -180,7 +172,7 @@ The sidebar is a unique Whale browser feature that provides a persistent side pa
 ## Resources
 
 - [Naver Whale Extension Docs](https://developers.whale.naver.com/)
-- [Chrome Extension Docs](https://developer.chrome.com/docs/extensions/) (Compatible)
+- [Chrome Extension Docs](https://developer.chrome.com/docs/extensions/) (Chrome APIs work in Whale)
 - [Manifest V3 Migration Guide](https://developer.chrome.com/docs/extensions/migrating/to-service-workers/)
 - [Vite Documentation](https://vitejs.dev/)
 - [Tailwind CSS](https://tailwindcss.com/)
