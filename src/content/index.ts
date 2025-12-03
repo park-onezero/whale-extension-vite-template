@@ -3,12 +3,12 @@
 console.log('Content script loaded');
 
 // Example: Send message to background script
-chrome.runtime.sendMessage({ type: 'GET_DATA' }, (response) => {
+whale.runtime.sendMessage({ type: 'GET_DATA' }, (response) => {
   console.log('Response from background:', response);
 });
 
 // Example: Listen for messages from popup or background
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+whale.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Message received in content script:', request);
 
   if (request.type === 'PING') {

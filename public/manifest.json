@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
-  "name": "Chrome Extension Template",
+  "name": "Whale Extension Template",
   "version": "1.0.0",
-  "description": "A Chrome extension built with Vite, React, TypeScript, and Tailwind CSS",
+  "description": "A Whale extension built with Vite, React, TypeScript, and Tailwind CSS",
   "icons": {
     "16": "icon-16.png",
     "48": "icon-48.png",
@@ -15,6 +15,14 @@
       "48": "icon-48.png",
       "128": "icon-128.png"
     }
+  },
+  "sidebar_action": {
+    "default_page": "sidebar.html",
+    "default_icon": {
+      "16": "icon-16.png"
+    },
+    "default_title": "Whale Sidebar",
+    "use_navigation_bar": true
   },
   "background": {
     "service_worker": "background.js",
@@ -33,7 +41,8 @@
   "options_page": "options.html",
   "permissions": [
     "storage",
-    "activeTab"
+    "activeTab",
+    "tabs"
   ],
   "host_permissions": []
 }

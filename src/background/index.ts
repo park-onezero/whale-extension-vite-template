@@ -1,10 +1,10 @@
-// Background service worker for Chrome extension
+// Background service worker for Whale extension
 
-chrome.runtime.onInstalled.addListener(() => {
+whale.runtime.onInstalled.addListener(() => {
   console.log('Extension installed');
 
   // Initialize default settings
-  chrome.storage.sync.set({
+  whale.storage.sync.set({
     settings: {
       option1: true,
       option2: false,
@@ -12,7 +12,7 @@ chrome.runtime.onInstalled.addListener(() => {
   });
 });
 
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+whale.runtime.onMessage.addListener((request, sender, sendResponse) => {
   console.log('Message received:', request);
 
   // Handle messages from content scripts or popup
@@ -24,7 +24,7 @@ chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
 });
 
 // Example: Listen to tab updates
-chrome.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
+whale.tabs.onUpdated.addListener((tabId, changeInfo, tab) => {
   if (changeInfo.status === 'complete' && tab.url) {
     console.log('Tab updated:', tab.url);
   }

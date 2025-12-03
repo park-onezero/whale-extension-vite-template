@@ -9,7 +9,7 @@ function Options() {
 
   useEffect(() => {
     // Load saved settings
-    chrome.storage.sync.get(['settings'], (result) => {
+    whale.storage.sync.get(['settings'], (result) => {
       if (result.settings) {
         setSettings(result.settings as typeof settings);
       }
@@ -17,7 +17,7 @@ function Options() {
   }, []);
 
   const handleSave = () => {
-    chrome.storage.sync.set({ settings }, () => {
+    whale.storage.sync.set({ settings }, () => {
       setSaved(true);
       setTimeout(() => setSaved(false), 2000);
     });

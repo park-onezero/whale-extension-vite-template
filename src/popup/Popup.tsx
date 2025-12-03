@@ -5,7 +5,7 @@ function Popup() {
 
   return (
     <div className="w-80 p-4">
-      <h1 className="text-2xl font-bold mb-4">Chrome Extension</h1>
+      <h1 className="text-2xl font-bold mb-4">Whale Extension</h1>
       <div className="space-y-4">
         <div className="flex items-center justify-between">
           <span className="text-sm">Count:</span>
